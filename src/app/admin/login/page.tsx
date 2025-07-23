@@ -30,7 +30,7 @@ export default function AdminLogin() {
       if (response.ok) {
         router.push("/admin/dashboard");
       } else {
-        const data = await response.json();
+        const data = await response.json() as { error?: string };
         setError(data.error || "Invalid credentials");
       }
     } catch (error) {

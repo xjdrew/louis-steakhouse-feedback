@@ -29,7 +29,7 @@ export default function SubmitFeedback() {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = await response.json() as { feedbackId: string };
         router.push(`/feedback/success?id=${result.feedbackId}`);
       } else {
         alert("Failed to submit feedback. Please try again.");

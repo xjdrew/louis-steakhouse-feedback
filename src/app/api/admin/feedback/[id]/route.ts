@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 
 export async function PATCH(
@@ -19,7 +19,7 @@ export async function PATCH(
       );
     }
 
-    const body = await request.json();
+    const body = await request.json() as { status?: string; response?: string };
     const { status, response } = body;
 
     if (!status || !["unprocessed", "processing", "processed"].includes(status)) {
@@ -29,6 +29,7 @@ export async function PATCH(
       );
     }
 
+    const db = await getDb();
     const updatedFeedback = await db.feedback.update({
       where: { id: feedbackId },
       data: {

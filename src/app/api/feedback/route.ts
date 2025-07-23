@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as { name?: string; contact?: string; diningTime?: string; rating?: number; content?: string };
     const { name, contact, diningTime, rating, content } = body;
 
     if (!content) {
@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const db = await getDb();
     const feedback = await db.feedback.create({
       data: {
         name: name || null,
@@ -49,6 +50,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const db = await getDb();
     const feedback = await db.feedback.findUnique({
       where: { feedbackId },
       select: {

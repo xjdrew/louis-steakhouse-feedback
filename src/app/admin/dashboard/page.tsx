@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 interface Feedback {
@@ -26,11 +26,7 @@ export default function AdminDashboard() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editData, setEditData] = useState({ status: "", response: "" });
 
-  useEffect(() => {
-    fetchFeedbacks();
-  }, []);
-
-  const fetchFeedbacks = async () => {
+  const fetchFeedbacks = useCallback(async () => {
     try {
       const response = await fetch("/api/admin/feedback");
       if (response.status === 401) {
@@ -38,7 +34,7 @@ export default function AdminDashboard() {
         return;
       }
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json() as Feedback[];
         setFeedbacks(data);
       } else {
         setError("Failed to fetch feedback");
@@ -49,7 +45,11 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchFeedbacks();
+  }, [fetchFeedbacks]);
 
   const handleLogout = async () => {
     try {

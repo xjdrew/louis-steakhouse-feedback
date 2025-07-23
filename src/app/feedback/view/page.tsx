@@ -35,7 +35,7 @@ export default function ViewFeedback() {
       const response = await fetch(`/api/feedback?id=${encodeURIComponent(feedbackId.trim())}`);
       
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json() as Feedback;
         setFeedback(data);
       } else if (response.status === 404) {
         setError("Feedback not found. Please check your ID and try again.");

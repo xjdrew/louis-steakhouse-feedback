@@ -1,11 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
+import { getDb } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 
 export async function GET() {
   try {
     await requireAuth();
 
+    const db = await getDb();
     const feedbacks = await db.feedback.findMany({
       orderBy: {
         createdAt: "desc",

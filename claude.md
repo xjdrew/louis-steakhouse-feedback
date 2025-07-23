@@ -1,7 +1,6 @@
 # Bash commands
-- pnpm run dev: Run the development server
-- pnpm run build: Build the project
-- pnpm run typecheck: Run the typechecker
+- npm run dev: Run the development server
+- npm run build: Build the project
 
 # Code style
 - Use ES modules (import/export) syntax, not CommonJS (require)

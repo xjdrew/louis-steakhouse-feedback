@@ -1,0 +1,22 @@
+name = "louis-steakhouse-feedback"
+main = ".open-next/worker.js"
+compatibility_date = "2025-03-01"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+observability = { enabled = true }
+
+# Assets binding for static files
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+# Replace with your actual database ID
+[[d1_databases]]
+binding = "DB"
+database_name = "prod-louis-steakhouse-feedback"
+database_id = "4f224956-0229-49f2-aa2d-af300e7eda30"
+
+# Environment variables
+[vars]
+NODE_ENV = "production"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "secret_for_2025"

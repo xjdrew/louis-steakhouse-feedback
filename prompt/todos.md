@@ -12,6 +12,7 @@
 - [x] Implement admin authentication system
 - [x] Build admin dashboard for feedback management
 - [x] Add feedback status management (未处理/处理中/已处理)
+- [x] Configure OpenNext adapter for Cloudflare Workers deployment
 
 ## Low Priority
 - [ ] Style components with Material Design and Tailwind CSS

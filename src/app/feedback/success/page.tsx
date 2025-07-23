@@ -2,8 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default function FeedbackSuccess() {
+function FeedbackSuccessContent() {
   const searchParams = useSearchParams();
   const feedbackId = searchParams.get("id");
 
@@ -69,5 +70,13 @@ export default function FeedbackSuccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function FeedbackSuccess() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <FeedbackSuccessContent />
+    </Suspense>
   );
 }

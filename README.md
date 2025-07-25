@@ -198,6 +198,7 @@ ADMIN_PASSWORD = "secret_for_2025"  # Change this!
 - **Styling**: Tailwind CSS 4
 - **Database**: Prisma ORM with Cloudflare D1 (SQLite-compatible)
 - **Database Adapter**: `@prisma/adapter-d1` for D1 integration
+- **Caching**: Custom TypeScript cache handler for Cloudflare Workers
 - **Authentication**: Cookie-based session management
 - **Deployment**: Cloudflare Workers with OpenNext.js
 - **Build Tool**: Turbopack (dev), OpenNext.js (production)

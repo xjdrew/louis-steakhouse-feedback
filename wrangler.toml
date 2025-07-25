@@ -15,8 +15,14 @@ binding = "DB"
 database_name = "prod-louis-steakhouse-feedback"
 database_id = "4f224956-0229-49f2-aa2d-af300e7eda30"
 
+[[d1_databases]]
+binding = "NEXT_TAG_CACHE_D1"
+database_name = "prod-louis-steakhouse-tagcache"
+database_id = "b9ffd34a-11a4-4b89-acfc-eff1427d6dd0"
+
+[[kv_namespaces]]
+binding = "NEXT_INC_CACHE_KV"
+id = "6f9136bbf6cb4166b1e95c9ef6cf0df9"
+
 # Environment variables
 [vars]
-NODE_ENV = "production"
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "secret_for_2025"

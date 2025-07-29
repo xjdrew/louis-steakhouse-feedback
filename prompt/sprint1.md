@@ -1,6 +1,6 @@
 ## 目标
 
-为`Louis' Steak House`创建用户反馈收集及管理网站。
+为`Louis' Steak House Feedback`创建用户反馈收集及管理网站。
 
 ## 需求列表
 
@@ -18,7 +18,6 @@
 * 使用 nextjs: TypeScript + Tailwind CSS
 * 使用 prisma: ORM
 * 使用 Cloudflare D1 数据库
-
 
 ## 部署
 

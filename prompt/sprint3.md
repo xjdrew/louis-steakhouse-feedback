@@ -2,8 +2,9 @@
 改进项目的技术架构，使其更容易维护、更新和扩展。
 
 ## 需求列表
-* 使用 shadcn/ui，和tailwind一起，构建更容易使用的UI组件库。
-* 提取 common components，比如header、footer、sidebar、评论等。
+* 使用 shadcn/ui 重构ui，尽量减少重复代码，使UI更容易维护，代码更简洁。
+* 尝试提取 common components， 不要勉强；减少重复代码。
+* 优化异步操作的页面加载体验
 * 增加单元测试
 * 增加注释和文档
 

@@ -1,6 +1,6 @@
 # Louis' Steak House Feedback Website - Development Tasks
 
-## Completed Tasks
+## Sprint 1 - Tasks
 - [x] Set up Next.js project with TypeScript and Tailwind CSS
 - [x] Configure Prisma with Cloudflare D1 database
 - [x] Design database schema for feedback system
@@ -12,7 +12,7 @@
 - [x] Add feedback status management (未处理/处理中/已处理)
 - [x] Configure OpenNext adapter for Cloudflare Workers deployment
 
-## Sprint 2 - High Priority Tasks
+## Sprint 2 - Tasks
 
 ### SEO & Meta Optimization
 - [x] Add proper page titles and meta descriptions for all pages
@@ -39,39 +39,56 @@
 - [x] Add filter UI controls (dropdown/buttons)
 
 ### Feedback Form Enhancements
-- [ ] Set default dining time to current date/time
-- [ ] Replace basic rating input with star rating component
-- [ ] Implement redirect to comment detail page after submission
-- [ ] Add form validation and better UX feedback
+- [x] Set default dining time to current date/time
+- [x] Replace basic rating input with star rating component
+- [x] Implement redirect to comment detail page after submission
+- [x] Add form validation and better UX feedback
 
 ### Mobile Responsiveness
-- [ ] Audit all pages for mobile compatibility
-- [ ] Optimize comment cards for mobile display
-- [ ] Ensure rating components work on touch devices
-- [ ] Test pagination controls on mobile
-- [ ] Optimize form layouts for mobile
+- [x] Audit all pages for mobile compatibility
+- [x] Optimize comment cards for mobile display
+- [x] Ensure rating components work on touch devices
+- [x] Test pagination controls on mobile
+- [x] Optimize form layouts for mobile
 
-## Sprint 2 - Medium Priority Tasks
+## Sprint 3 - 技术架构改进
 
-### Database Updates
-- [ ] Add likes and dislikes columns to feedback table
-- [ ] Create database migration for new fields
-- [ ] Update Prisma schema for like/dislike functionality
+### Phase 1: Foundation Setup
+- [x] Install and configure shadcn/ui component library
+- [x] Set up Jest testing framework and configuration
+- [x] Configure test environment for Next.js and TypeScript
 
-### API Enhancements
-- [ ] Create API endpoints for like/dislike actions
-- [ ] Add pagination API for comments
-- [ ] Implement filtering API endpoints
-- [ ] Add API for fetching individual comment details
+### Phase 2: UI Architecture Refactoring
+- [ ] Audit existing UI components and identify duplication patterns
+- [ ] Replace existing button components with shadcn/ui Button
+- [ ] Replace existing form components with shadcn/ui Form components
+- [ ] Replace existing card components with shadcn/ui Card
+- [ ] Migrate StarRating component to use shadcn/ui base components
+- [ ] Extract common layout patterns into reusable components
+- [ ] Extract common form validation patterns
 
-### Performance & UX
-- [ ] Implement loading states for all async operations
-- [ ] Add error handling for failed operations
-- [ ] Optimize image loading and caching
-- [ ] Add client-side route prefetching
+### Phase 3: User Experience Enhancement
+- [ ] Add loading states to feedback submission form
+- [ ] Add skeleton screens for homepage comment loading
+- [ ] Add loading indicators for pagination navigation
+- [ ] Add loading states for like/dislike button interactions
+- [ ] Implement error boundaries for better error handling
+- [ ] Add toast notifications for user actions feedback
 
-### Testing & Quality
-- [ ] Test all new features across different devices
-- [ ] Validate social sharing functionality
-- [ ] Performance testing on mobile devices
-- [ ] Cross-browser compatibility testing
+### Phase 4: Testing Infrastructure
+- [ ] Write unit tests for utility functions
+- [ ] Write tests for StarRating component
+- [ ] Write tests for CommentCard component
+- [ ] Write tests for Pagination component
+- [ ] Write API route tests for feedback endpoints
+- [ ] Write tests for like/dislike functionality
+- [ ] Set up test coverage reporting
+
+### Phase 5: Documentation & Code Quality
+- [ ] Add JSDoc comments to all components
+- [ ] Add JSDoc comments to utility functions
+- [ ] Add JSDoc comments to API routes
+- [ ] Document component prop interfaces
+- [ ] Document database schema and relationships
+- [ ] Create component architecture documentation
+- [ ] Update README with testing and development guidelines

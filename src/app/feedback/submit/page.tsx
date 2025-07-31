@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import PageContainer from "@/components/layout/PageContainer";
-import { validateFeedbackForm, hasValidationErrors, type FeedbackFormData, type ValidationError } from "@/lib/validation";
 
 export default function SubmitFeedback() {
   const router = useRouter();
-  const [formData, setFormData] = useState<FeedbackFormData>({
+  const [formData, setFormData] = useState({
     name: "",
     contact: "",
     diningTime: "",
@@ -22,7 +22,7 @@ export default function SubmitFeedback() {
     content: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<ValidationError>({});
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [submitMessage, setSubmitMessage] = useState<{type: 'success' | 'error', message: string} | null>(null);
 
   // Set default dining time to current date/time
@@ -38,9 +38,29 @@ export default function SubmitFeedback() {
   }, []);
 
   const validateForm = () => {
-    const newErrors = validateFeedbackForm(formData);
+    const newErrors: {[key: string]: string} = {};
+
+    if (!formData.content.trim()) {
+      newErrors.content = "Feedback is required";
+    } else if (formData.content.trim().length < 10) {
+      newErrors.content = "Feedback must be at least 10 characters";
+    }
+
+    if (formData.contact && formData.contact.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[\+]?[\d\s\-\(\)]+$/;
+      
+      if (!emailRegex.test(formData.contact) && !phoneRegex.test(formData.contact)) {
+        newErrors.contact = "Please enter a valid email or phone number";
+      }
+    }
+
+    if (formData.rating < 1 || formData.rating > 5) {
+      newErrors.rating = "Rating must be between 1 and 5";
+    }
+
     setErrors(newErrors);
-    return !hasValidationErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,7 +94,7 @@ export default function SubmitFeedback() {
           router.push(`/feedback/${result.feedbackId}`);
         }, 2000);
       } else {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = await response.json().catch(() => ({})) as { error?: string };
         setSubmitMessage({ 
           type: 'error', 
           message: errorData.error || "Failed to submit feedback. Please try again." 
@@ -125,14 +145,14 @@ export default function SubmitFeedback() {
 
   return (
     <PageContainer maxWidth="md" padding="md">
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl sm:text-2xl text-gray-900">
-            Submit Your Feedback
+      <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-gray-50 rounded-2xl overflow-hidden">
+        <CardHeader className="text-center pb-4 pt-6">
+          <CardTitle className="text-3xl sm:text-4xl text-gray-900 font-bold tracking-tight">
+            Share Your Experience
           </CardTitle>
-          <p className="text-sm sm:text-base text-gray-600">
+          <CardDescription className="text-base text-gray-600 mt-2">
             Help us improve your dining experience
-          </p>
+          </CardDescription>
         </CardHeader>
         <CardContent>
 
@@ -155,10 +175,10 @@ export default function SubmitFeedback() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-            <div>
-              <Label htmlFor="name">
-                Name (Optional)
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+            <div className="space-y-2 transition-all duration-300">
+              <Label htmlFor="name" className="text-base font-medium text-gray-700">
+                Name <span className="text-muted-foreground font-normal">(Optional)</span>
               </Label>
               <Input
                 type="text"
@@ -166,16 +186,17 @@ export default function SubmitFeedback() {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={errors.name ? 'border-red-300' : ''}
+                className={`text-base rounded-lg border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${errors.name ? 'border-red-300' : ''}`}
+                placeholder="Enter your name"
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                <p className="mt-1 text-sm text-red-600 animate-pulse">{errors.name}</p>
               )}
             </div>
 
-            <div>
-              <Label htmlFor="contact">
-                Contact (Email/Phone) (Optional)
+            <div className="space-y-2 transition-all duration-300">
+              <Label htmlFor="contact" className="text-base font-medium text-gray-700">
+                Contact <span className="text-muted-foreground font-normal">(Email/Phone, Optional)</span>
               </Label>
               <Input
                 type="text"
@@ -183,16 +204,17 @@ export default function SubmitFeedback() {
                 name="contact"
                 value={formData.contact}
                 onChange={handleInputChange}
-                className={errors.contact ? 'border-red-300' : ''}
+                className={`text-base rounded-lg border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${errors.contact ? 'border-red-300' : ''}`}
+                placeholder="Enter your email or phone number"
               />
               {errors.contact && (
-                <p className="mt-1 text-sm text-red-600">{errors.contact}</p>
+                <p className="mt-1 text-sm text-red-600 animate-pulse">{errors.contact}</p>
               )}
             </div>
 
-            <div>
-              <Label htmlFor="diningTime">
-                Dining Time (Optional)
+            <div className="space-y-2 transition-all duration-300">
+              <Label htmlFor="diningTime" className="text-base font-medium text-gray-700">
+                Dining Time <span className="text-muted-foreground font-normal">(Optional)</span>
               </Label>
               <Input
                 type="datetime-local"
@@ -200,30 +222,32 @@ export default function SubmitFeedback() {
                 name="diningTime"
                 value={formData.diningTime}
                 onChange={handleInputChange}
-                className={errors.diningTime ? 'border-red-300' : ''}
+                className={`text-base rounded-lg border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${errors.diningTime ? 'border-red-300' : ''}`}
               />
               {errors.diningTime && (
-                <p className="mt-1 text-sm text-red-600">{errors.diningTime}</p>
+                <p className="mt-1 text-sm text-red-600 animate-pulse">{errors.diningTime}</p>
               )}
             </div>
 
-            <div>
-              <Label className="mb-2">
-                Rating *
+            <div className="space-y-2 transition-all duration-300">
+              <Label className="text-base font-medium text-gray-700">
+                Rating <span className="text-destructive">*</span>
               </Label>
-              <StarRating
-                rating={formData.rating}
-                onRatingChange={handleRatingChange}
-                size="lg"
-              />
+              <div className="py-3">
+                <StarRating
+                  rating={formData.rating}
+                  onRatingChange={handleRatingChange}
+                  size="lg"
+                />
+              </div>
               {errors.rating && (
-                <p className="mt-1 text-sm text-red-600">{errors.rating}</p>
+                <p className="mt-1 text-sm text-red-600 animate-pulse">{errors.rating}</p>
               )}
             </div>
 
-            <div>
-              <Label htmlFor="content">
-                Feedback *
+            <div className="space-y-2 transition-all duration-300">
+              <Label htmlFor="content" className="text-base font-medium text-gray-700">
+                Feedback <span className="text-destructive">*</span>
               </Label>
               <Textarea
                 id="content"
@@ -231,25 +255,25 @@ export default function SubmitFeedback() {
                 required
                 value={formData.content}
                 onChange={handleInputChange}
-                rows={4}
-                className={errors.content ? 'border-red-300' : ''}
+                rows={6}
+                className={`text-base resize-none rounded-lg border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${errors.content ? 'border-red-300' : ''}`}
                 placeholder="Please share your dining experience... (minimum 10 characters)"
               />
-              <div className="flex justify-between items-center mt-1">
+              <div className="flex justify-between items-center">
                 {errors.content && (
-                  <p className="text-sm text-red-600">{errors.content}</p>
+                  <p className="text-sm text-red-600 animate-pulse">{errors.content}</p>
                 )}
-                <p className="text-xs text-gray-500 ml-auto">
+                <p className="text-sm text-muted-foreground ml-auto">
                   {formData.content.length} characters
                 </p>
               </div>
             </div>
 
-            <div className="space-y-3 sm:space-y-4">
+            <div className="space-y-4 pt-4">
               <Button
                 type="submit"
                 disabled={isSubmitting || submitMessage?.type === 'success'}
-                className="w-full"
+                className="w-full text-base py-6 rounded-xl font-medium transition-all duration-300 hover:shadow-lg"
                 size="lg"
               >
                 {isSubmitting && (
@@ -264,7 +288,7 @@ export default function SubmitFeedback() {
               <Button
                 asChild
                 variant="outline"
-                className="w-full"
+                className="w-full text-base py-6 rounded-xl font-medium transition-all duration-300 hover:shadow-md"
                 size="lg"
               >
                 <Link href="/">

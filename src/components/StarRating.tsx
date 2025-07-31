@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface StarRatingProps {
   rating: number;
@@ -53,21 +54,24 @@ export default function StarRating({
             onMouseEnter={() => handleMouseEnter(star)}
             onMouseLeave={handleMouseLeave}
             disabled={disabled}
-            className={`transition-all duration-150 touch-manipulation ${
-              disabled 
-                ? "cursor-default" 
-                : "cursor-pointer hover:scale-110 active:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded p-1 -m-1"
-            }`}
+            className={cn(
+              "transition-all duration-150 touch-manipulation rounded p-1 -m-1",
+              disabled
+                ? "cursor-default"
+                : "cursor-pointer hover:scale-110 active:scale-125 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+            )}
             aria-label={`Rate ${star} out of 5 stars`}
           >
             <svg
-              className={`${sizeClasses[size]} transition-colors duration-150 ${
+              className={cn(
+                sizeClasses[size],
+                "transition-colors duration-150",
                 isActive
                   ? "text-yellow-400"
                   : disabled
-                  ? "text-gray-300"
-                  : "text-gray-300 hover:text-yellow-300"
-              }`}
+                  ? "text-muted-foreground/50"
+                  : "text-muted-foreground hover:text-yellow-300"
+              )}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -76,7 +80,7 @@ export default function StarRating({
           </button>
         );
       })}
-      <span className="ml-2 text-sm text-gray-600">
+      <span className="ml-2 text-sm text-muted-foreground">
         {rating} / 5
       </span>
     </div>

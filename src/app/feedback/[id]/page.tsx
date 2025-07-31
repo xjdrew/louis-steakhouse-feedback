@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import CommentCard from "@/components/CommentCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PageContainer from "@/components/layout/PageContainer";
+import PageHeader from "@/components/layout/PageHeader";
 
 interface Feedback {
   feedbackId: string;
@@ -112,23 +115,21 @@ export default function FeedbackDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 mb-4"
-          >
-            ← Back to Reviews
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Customer Review
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Detailed view of customer feedback
-          </p>
-        </div>
+    <PageContainer maxWidth="2xl">
+      <div className="mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 mb-4"
+        >
+          ← Back to Reviews
+        </Link>
+      </div>
+      
+      <PageHeader
+        title="Customer Review"
+        description="Detailed view of customer feedback"
+        size="md"
+      />
 
         {/* Feedback Detail */}
         <div className="bg-white rounded-lg shadow-sm">
@@ -146,8 +147,11 @@ export default function FeedbackDetailPage() {
         </div>
 
         {/* Social Sharing */}
-        <div className="mt-6 p-4 bg-white rounded-lg shadow-sm">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Share this review</h3>
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="text-lg text-gray-900">Share this review</CardTitle>
+          </CardHeader>
+          <CardContent>
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => {
@@ -183,7 +187,8 @@ export default function FeedbackDetailPage() {
               📘 Facebook
             </a>
           </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Navigation */}
         <div className="mt-8 flex justify-center">
@@ -194,7 +199,6 @@ export default function FeedbackDetailPage() {
             View All Reviews
           </Link>
         </div>
-      </div>
-    </div>
+    </PageContainer>
   );
 }

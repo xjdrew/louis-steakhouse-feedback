@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import CommentCard from "../components/CommentCard";
 import RatingFilter from "../components/RatingFilter";
 import Pagination from "../components/Pagination";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PageContainer from "@/components/layout/PageContainer";
+import PageHeader from "@/components/layout/PageHeader";
 
 interface Feedback {
   feedbackId: string;
@@ -96,37 +99,35 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Louis&apos; Steak House
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            We value your feedback and strive to provide the best dining experience.
-          </p>
+    <PageContainer>
+      <PageHeader
+        title="Louis' Steak House"
+        description="We value your feedback and strive to provide the best dining experience."
+        center
+      >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <Link
+            href="/feedback/submit"
+            className="flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+          >
+            Submit Feedback
+          </Link>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <Link
-              href="/feedback/submit"
-              className="flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-            >
-              Submit Feedback
-            </Link>
-            
-            <Link
-              href="/feedback/view"
-              className="flex justify-center py-3 px-6 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-            >
-              View My Feedback
-            </Link>
-          </div>
+          <Link
+            href="/feedback/view"
+            className="flex justify-center py-3 px-6 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+          >
+            View My Feedback
+          </Link>
         </div>
+      </PageHeader>
 
         {/* Feedback Section */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl text-gray-900">Customer Reviews</CardTitle>
+          </CardHeader>
+          <CardContent>
           
           <RatingFilter 
             currentRating={currentRating}
@@ -188,8 +189,8 @@ export default function Home() {
               />
             </>
           )}
-        </div>
-      </div>
-    </div>
+          </CardContent>
+        </Card>
+    </PageContainer>
   );
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 interface CommentCardProps {
   feedbackId: string;
@@ -110,34 +112,38 @@ export default function CommentCard({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-            <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
-              {name || "Anonymous"}
-            </h3>
-            <div className="flex items-center">
-              {renderStars(rating)}
+    <Card className="hover:shadow-lg transition-shadow duration-200">
+      <CardHeader>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
+                {name || "Anonymous"}
+              </h3>
+              <div className="flex items-center">
+                {renderStars(rating)}
+              </div>
             </div>
+            
+            {diningTime && (
+              <p className="text-xs sm:text-sm text-gray-500 mb-2">
+                Dined on {formatDiningTime(diningTime)}
+              </p>
+            )}
           </div>
           
-          {diningTime && (
-            <p className="text-xs sm:text-sm text-gray-500 mb-2">
-              Dined on {formatDiningTime(diningTime)}
-            </p>
-          )}
+          <span className="text-xs text-gray-400 self-start sm:self-auto whitespace-nowrap">
+            {formatDate(createdAt)}
+          </span>
         </div>
-        
-        <span className="text-xs text-gray-400 self-start sm:self-auto whitespace-nowrap">
-          {formatDate(createdAt)}
-        </span>
-      </div>
+      </CardHeader>
 
-      <p className={`text-gray-700 text-sm sm:text-base mb-4 ${isDetailView ? '' : 'line-clamp-3'}`}>{content}</p>
+      <CardContent>
+        <p className={`text-gray-700 text-sm sm:text-base ${isDetailView ? '' : 'line-clamp-3'}`}>{content}</p>
+      </CardContent>
 
-      {/* Like/Dislike Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4 pt-4 border-t border-gray-100 gap-3 sm:gap-0">
+      <CardFooter className="border-t border-gray-100">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3 sm:gap-0">
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={handleLike}
@@ -176,30 +182,35 @@ export default function CommentCard({
             </svg>
             <span className="font-medium">{dislikes}</span>
           </button>
-        </div>
+          </div>
 
-        {!isDetailView && (
-          <Link
-            href={`/feedback/${feedbackId}`}
-            className="inline-flex items-center justify-center sm:justify-start text-blue-600 hover:text-blue-800 active:text-blue-900 text-sm font-medium py-2 px-3 sm:px-0 rounded-md sm:rounded-none hover:bg-blue-50 sm:hover:bg-transparent transition-colors touch-manipulation"
-          >
-            Read more
-            <svg
-              className="w-4 h-4 ml-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {!isDetailView && (
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="text-blue-600 hover:text-blue-800"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </Link>
-        )}
-      </div>
-    </div>
+              <Link href={`/feedback/${feedbackId}`}>
+                Read more
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </Button>
+          )}
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
